@@ -1,13 +1,17 @@
 # Schema
 type Course {
-	id: ID
-	title: String
+	id: ID!
+	title: String!
 	teacher: String
-	description: String
+	description: String!
 	topic: String
 }
 
 # Return Schema
 type Query {
+	"Returns all courses"
 	courses: [Course]
+
+	"Returns a single course"
+	course(id: ID!): [Course]
 }
