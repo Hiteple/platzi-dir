@@ -4,17 +4,18 @@ const { buildSchema } = require('graphql')
 const express = require('express')
 const gqlMiddleware = require('express-graphql')
 const dotenv = require('dotenv')
+const { readFileSync } = require('fs')
+const { join } = require('path')
 
 dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 3000
 
-// Define Schema
-const schema = buildSchema(`
-   type Query {
-      hello: String
-   }`)
+// Read schema from lib/schema.graphql
+const schema = buildSchema(
+  readFileSync(join(__dirname, 'lib', 'schema.graphql'), 'utf8')
+)
 
 // Configure resolvers
 const resolvers = {
