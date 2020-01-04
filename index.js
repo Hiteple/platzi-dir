@@ -1,14 +1,21 @@
 'use strict'
 
+// Import basic dependecies
 const { buildSchema } = require('graphql')
 const express = require('express')
 const gqlMiddleware = require('express-graphql')
-const dotenv = require('dotenv')
+const resolvers = require('./lib/resolvers')
+
+// Reading
 const { readFileSync } = require('fs')
 const { join } = require('path')
 
+// Env
+const dotenv = require('dotenv')
+
 dotenv.config()
 
+/// /// Configure server //////
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -16,11 +23,6 @@ const port = process.env.PORT || 3000
 const schema = buildSchema(
   readFileSync(join(__dirname, 'lib', 'schema.graphql'), 'utf8')
 )
-
-// Configure resolvers
-const resolvers = {
-  hello: () => 'Hello world!'
-}
 
 // Use GraphQL middleware with express (express-graphql)
 // schema goes in schema, resolvers goes in rootValue, and graphiql is the development environment

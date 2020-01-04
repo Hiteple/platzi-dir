@@ -1,3 +1,13 @@
+# Schema
+type Course {
+	id: ID
+	title: String
+	teacher: String
+	description: String
+	topic: String
+}
+
+# Return Schema
 type Query {
-	hello: String
+	courses: [Course]
 }
