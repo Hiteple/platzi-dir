@@ -1,0 +1,23 @@
+{
+	"name": "platzi-dir",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon -e js,graphql index.js",
+		"lint": "standard",
+		"lint-fix": "standard --fix"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-graphql": "^0.9.0",
+		"graphql": "^14.5.8"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.2"
+	}
+}
