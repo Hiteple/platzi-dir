@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"start": "NODE_ENV=production node index.js",
 		"dev": "nodemon -e js,graphql index.js",
 		"lint": "standard",
 		"lint-fix": "standard --fix"
