@@ -1,4 +1,4 @@
-# Schema
+## Schema types ##
 type Course {
 	_id: ID!
 	title: String!
@@ -7,6 +7,14 @@ type Course {
 	topic: String
 }
 
+type Student {
+	_id: ID!
+	name: String!
+	email: String!
+}
+
+#################
+
 # Return Schema
 type Query {
 	# Returns all courses
@@ -14,4 +22,55 @@ type Query {
 
 	# Returns a single course
 	course(_id: ID!): [Course]
+
+	# Returns all students
+	students: [Student]
+
+	# Returns a single student
+	student(_id: ID!): [Student]
+}
+
+# Mutations
+input CourseInput {
+	title: String!
+	teacher: String
+	description: String!
+	topic: String
+}
+
+input CourseEditInput {
+	title: String
+	teacher: String
+	description: String
+	topic: String
+}
+
+input StudentInput {
+	name: String!
+	email: String!
+}
+
+input StudentEditInput {
+	name: String
+	email: String
+}
+
+type Mutation {
+	# Creates a course
+	createCourse(input: CourseInput!): [Course]
+
+	# Edits a course
+	editCourse(_id: ID!, input: CourseEditInput!): [Course]
+
+	# Creates a course
+	createStudent(input: StudentInput!): [Student]
+
+	# Edits a student
+	editStudent(_id: ID!, input: StudentEditInput!): [Student]
+
+	# Deletes a course
+	deleteCourse(_id: ID!): [Course]
+
+	# Deletes a student
+	deleteStudent(_id: ID!): [Student]
 }
