@@ -1,3 +1,12 @@
+"Validates level types"
+enum Level {
+	basic
+	intermediate
+	advanced
+}
+
+union GlobalSearch = Course | Student | Monitor
+
 ## Schema types ##
 type Course {
 	_id: ID!
@@ -6,12 +15,27 @@ type Course {
 	description: String!
 	topic: String
 	people: [Student]
+	level: Level
 }
 
-type Student {
+interface Person {
 	_id: ID!
 	name: String!
 	email: String!
+}
+
+type Student implements Person {
+	_id: ID!
+	name: String!
+	email: String!
+	avatar: String
+}
+
+type Monitor implements Person {
+	_id: ID!
+	name: String!
+	email: String!
+	phone: String
 }
 
 #################
@@ -25,10 +49,13 @@ type Query {
 	course(_id: ID!): [Course]
 
 	# Returns all students
-	students: [Student]
+	students: [Person]
 
 	# Returns a single student
-	student(_id: ID!): [Student]
+	student(_id: ID!): [Person]
+
+	# Global search with union type
+	searchItems(keyword: String!): [GlobalSearch]
 }
 
 # Mutations
@@ -37,6 +64,7 @@ input CourseInput {
 	teacher: String
 	description: String!
 	topic: String
+	level: Level
 }
 
 input CourseEditInput {
@@ -46,14 +74,18 @@ input CourseEditInput {
 	topic: String
 }
 
-input StudentInput {
+input PersonInput {
 	name: String!
 	email: String!
+	phone: String
+	avatar: String
 }
 
-input StudentEditInput {
+input PersonEditInput {
 	name: String
 	email: String
+	phone: String
+	avatar: String
 }
 
 type Mutation {
@@ -64,16 +96,16 @@ type Mutation {
 	editCourse(_id: ID!, input: CourseEditInput!): [Course]
 
 	# Creates a course
-	createStudent(input: StudentInput!): [Student]
+	createStudent(input: PersonInput!): [Person]
 
 	# Edits a student
-	editStudent(_id: ID!, input: StudentEditInput!): [Student]
+	editStudent(_id: ID!, input: PersonEditInput!): [Person]
 
 	# Deletes a course
 	deleteCourse(_id: ID!): [Course]
 
 	# Deletes a student
-	deleteStudent(_id: ID!): [Student]
+	deleteStudent(_id: ID!): [Person]
 
 	# Adds a person to a course
 	addPeople(courseID: ID!, personID: ID!): Course
